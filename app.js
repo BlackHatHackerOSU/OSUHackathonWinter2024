@@ -1,3 +1,4 @@
+// app.js
 const Application = function () {
     this.initA4();
     this.tuner = new Tuner(this.a4);
@@ -44,10 +45,10 @@ const Application = function () {
           if (!parseInt(a4) || a4 === self.a4) {
             return;
           }
-          self.a4 = a4;
+          self.a4 = parseInt(a4); // Ensure a4 is always an integer
           self.$a4.innerHTML = a4;
-          self.tuner.middleA = a4;
-          self.notes.createNotes();
+          self.tuner.middleA = a4; // Update tuner's A4
+          self.notes.createNotes(); // Recreate notes with new A4
           self.update({
             name: "A",
             frequency: self.a4,
@@ -55,7 +56,7 @@ const Application = function () {
             value: 69,
             cents: 0,
           });
-          localStorage.setItem("a4", a4);
+          localStorage.setItem("a4", a4.toString());
         });
     });
   
@@ -81,3 +82,4 @@ const Application = function () {
   
   const app = new Application();
   app.start();
+  
