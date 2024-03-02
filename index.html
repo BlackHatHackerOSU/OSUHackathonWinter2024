@@ -6,12 +6,15 @@
       name="viewport"
       content="width=device-width,initial-scale=1,user-scalable=no"
     />
-    <title>Guitar Tab Trackerr</title>
-    <link rel="stylesheet" href="style.css" />
+    <title>Guitar Tab Tracker</title>
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <!-- Removed the frequency bars canvas element -->
-    <canvas class="tuner"></canvas>
+    <!-- Added a container for the tuner -->
+    <div class="tuner-container">
+      <canvas class="tuner"></canvas>
+    </div>
+    
     <div class="meter">
       <div class="meter-dot"></div>
       <div class="meter-pointer"></div>
@@ -26,8 +29,15 @@
     <script src="https://cdn.jsdelivr.net/npm/aubiojs@0.1.1/build/aubio.min.js"></script>
     <script src="tuner.js"></script>
     <script src="meter.js"></script>
-    <!-- Removed the script for frequency bars -->
     <script src="notes.js"></script>
     <script src="app.js"></script>
+
+    <!-- Initialize and start the tuner -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        const tuner = new Tuner(); // You can pass A4 frequency as an argument if needed
+        tuner.init();
+      });
+    </script>
   </body>
 </html>
