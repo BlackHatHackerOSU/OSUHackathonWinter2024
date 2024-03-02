@@ -5,40 +5,6 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
   <title>Online Improve recorder</title>
   <link rel="stylesheet" href="style.css" />
-  <style>
-    /* Add the tab styles here */
-    .tab-container {
-      position: relative;
-      width: 200px;
-      height: 40px;
-      background-color: #3498db;
-      border-radius: 5px;
-      overflow: hidden;
-      cursor: pointer;
-      margin-top: 20px; /* Adjust the margin based on your layout */
-    }
-
-    .tab-content {
-      position: absolute;
-      top: 100%;
-      left: 0;
-      width: 100%;
-      padding: 10px;
-      background-color: #2980b9;
-      color: #fff;
-      border-radius: 0 0 5px 5px;
-      box-sizing: border-box;
-      transform: scaleY(0);
-      transform-origin: top;
-      transition: transform 0.3s ease-in-out;
-      visibility: hidden;
-    }
-
-    .tab-container:hover .tab-content {
-      transform: scaleY(1);
-      visibility: visible;
-    }
-  </style>
 </head>
 <body>
   <canvas class="frequency-bars"></canvas>
