@@ -40,6 +40,11 @@
     height: 80px;
 }
 
+.guitar {
+    position: absolute;
+    left: 10px;
+}
+
 .navbar-links1 {
     color: white;
     grid-area: 1 / 1 / 2 / 2;

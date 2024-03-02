@@ -21,6 +21,7 @@ html {
 .auto {
     position: absolute;
     right: 30px;
+    accent-color: #203354;
 }
 
 body {
@@ -39,7 +40,7 @@ body {
     margin: auto;
     width: 400px;
     position: fixed;
-    top: 50%;
+    top: 63%;
     left: 0;
     right: 0;
     text-align: center;
@@ -110,7 +111,7 @@ body {
     position: fixed;
     left: 0;
     right: 0;
-    bottom: 50%;
+    bottom: 45%;
     width: 400px;
     height: 33%;
     margin: 0 auto 5vh auto;
@@ -152,6 +153,10 @@ body {
 .meter-scale-strong {
     width: 2px;
     border-top-width: 20px;
+}
+
+.frequency, .frequency span {
+    color: #cB6843;
 }
 
 .tab-container {
