@@ -3,50 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Frequency Amplitude Calculator</title>
-    <style>
-        body { font-family: Arial, sans-serif; padding: 20px; }
-        .result { margin-top: 20px; }
-    </style>
-</head>
-<body>
-    <h1>Compute Frequency Amplitudes</h1>
-    <form id="dataForm">
-        <div>
-            <label for="timeseries">Time Series (comma-separated values):</label><br>
-            <input type="text" id="timeseries" name="timeseries" size="50">
-        </div>
-        <div>
-            <label for="testFrequencies">Test Frequencies (JSON format):</label><br>
-            <input type="text" id="testFrequencies" name="testFrequencies" size="50">
-        </div>
-        <div>
-            <label for="sampleRate">Sample Rate:</label><br>
-            <input type="number" id="sampleRate" name="sampleRate">
-        </div>
-        <button type="button" onclick="computeAmplitudes()">Compute Amplitudes</button>
-    </form>
+    <title>Microphone Frequency Analyzer</title>
+    <script type="module">
+        // Constants for musical notes
+        const C2 = 65.41; // C2 note, in Hz
+        const notes = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
+        let testFrequencies = [];
 
-    <div class="result" id="result"></div>
+        // Populate test frequencies
+        for (let i = 0; i < 30; i++) {
+            const noteFrequency = C2 * Math.pow(2, i / 12);
+            const noteName = notes[i % 12];
+            const note = { frequency: noteFrequency, name: noteName };
+            const justAbove = { frequency: noteFrequency * Math.pow(2, 1 / 48), name: `${noteName} (sharp)` };
+            const justBelow = { frequency: noteFrequency * Math.pow(2, -1 / 48), name: `${noteName} (flat)` };
+            testFrequencies = testFrequencies.concat([justBelow, note, justAbove]);
+        }
 
-    <script>
-        if (window.Worker) {
-            const myWorker = new Worker("worker.js");
+        // Initialize application
+        window.addEventListener("load", initialize);
+        const correlationWorker = new Worker("worker.js");
+        correlationWorker.addEventListener("message", interpretCorrelationResult);
 
-            myWorker.onmessage = function(e) {
-                document.getElementById("result").innerText = `Result: ${JSON.stringify(e.data.frequencyAmplitudes)}`;
+        function initialize() {
+            const getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+            getUserMedia.call(navigator, { audio: true }, useStream, () => {});
+
+            document.getElementById("play-note").addEventListener("click", togglePlayingNote);
+        }
+
+        function useStream(stream) {
+            const audioContext = new AudioContext();
+            const microphone = audioContext.createMediaStreamSource(stream);
+            const scriptProcessor = audioContext.createScriptProcessor(1024, 1, 1);
+
+            scriptProcessor.connect(audioContext.destination);
+            microphone.connect(scriptProcessor);
+
+            let buffer = [];
+            const sampleLengthMilliseconds = 100;
+            let recording = true;
+
+            window.captureAudio = (event) => {
+                if (!recording) return;
+
+                buffer = buffer.concat(Array.from(event.inputBuffer.getChannelData(0)));
+
+                if (buffer.length > sampleLengthMilliseconds * audioContext.sampleRate / 1000) {
+                    recording = false;
+                    correlationWorker.postMessage({ timeseries: buffer, testFrequencies, sampleRate: audioContext.sampleRate });
+                    buffer = [];
+                    setTimeout(() => { recording = true; }, 250);
+                }
             };
 
-            function computeAmplitudes() {
-                const timeseries = document.getElementById("timeseries").value.split(',').map(Number);
-                const testFrequencies = JSON.parse(document.getElementById("testFrequencies").value);
-                const sampleRate = Number(document.getElementById("sampleRate").value);
-                
-                myWorker.postMessage({ timeseries, testFrequencies, sampleRate });
+            scriptProcessor.onaudioprocess = window.captureAudio;
+        }
+
+        function interpretCorrelationResult({ data }) {
+            const { frequencyAmplitudes } = data;
+            const magnitudes = frequencyAmplitudes.map(([real, imaginary]) => real * real + imaginary * imaginary);
+            let maximumIndex = -1;
+            let maximumMagnitude = 0;
+
+            magnitudes.forEach((magnitude, index) => {
+                if (magnitude > maximumMagnitude) {
+                    maximumIndex = index;
+                    maximumMagnitude = magnitude;
+                }
+            });
+
+            const averageMagnitude = magnitudes.reduce((a, b) => a + b, 0) / magnitudes.length;
+            const confidence = maximumMagnitude / averageMagnitude;
+            const confidenceThreshold = 10;
+
+            if (confidence > confidenceThreshold) {
+                const dominantFrequency = testFrequencies[maximumIndex];
+                document.getElementById("note-name").textContent = dominantFrequency.name;
+                document.getElementById("frequency").textContent = dominantFrequency.frequency.toFixed(2);
             }
-        } else {
-            document.getElementById("result").innerText = "Your browser doesn't support web workers.";
+        }
+
+        // Audio context for playing notes
+        const noteContext = new AudioContext();
+        const noteNode = noteContext.createOscillator();
+        const gainNode = noteContext.createGain();
+        noteNode.frequency.value = C2 * Math.pow(2, 4 / 12); // E note frequency
+        gainNode.gain.value = 0;
+        noteNode.connect(gainNode);
+        gainNode.connect(noteContext.destination);
+        noteNode.start();
+
+        let playing = false;
+        function togglePlayingNote() {
+            playing = !playing;
+            gainNode.gain.value = playing ? 0.1 : 0;
         }
     </script>
+</head>
+<body>
+    <div class="body-wrapper">
+        <p>It sounds like you're playing...</p>
+        <h1 id="note-name"></h1>
+        <p>
+            <span>frequency (Hz): </span>
+            <span id="frequency"></span>
+        </p>
+    </div>
+
 </body>
 </html>
