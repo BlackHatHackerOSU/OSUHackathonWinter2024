@@ -3,6 +3,7 @@ html {
   }
   
 body {
+    background-color: #eedbbb;
     position: fixed;
     font-family: sans-serif;
     color: #2c3e50;
@@ -33,7 +34,9 @@ body {
 }
   
 .note.active {
-    color: #613ce7;
+    background: linear-gradient(to right, #cB6843, #CB6840);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
   
 .notes-list {
@@ -82,6 +85,7 @@ body {
 }
   
 .meter {
+    color: #2c3e50;
     position: fixed;
     left: 0;
     right: 0;
@@ -97,7 +101,7 @@ body {
     background: #2c3e50;
     transform: rotate(45deg);
     transform-origin: bottom;
-    transition: transform 0.5s;
+    transition: transform 0.3s;
     position: absolute;
     right: 50%;
 }
