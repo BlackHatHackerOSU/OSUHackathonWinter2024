@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frequency Amplitude Calculator</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .result { margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h1>Compute Frequency Amplitudes</h1>
+    <form id="dataForm">
+        <div>
+            <label for="timeseries">Time Series (comma-separated values):</label><br>
+            <input type="text" id="timeseries" name="timeseries" size="50">
+        </div>
+        <div>
+            <label for="testFrequencies">Test Frequencies (JSON format):</label><br>
+            <input type="text" id="testFrequencies" name="testFrequencies" size="50">
+        </div>
+        <div>
+            <label for="sampleRate">Sample Rate:</label><br>
+            <input type="number" id="sampleRate" name="sampleRate">
+        </div>
+        <button type="button" onclick="computeAmplitudes()">Compute Amplitudes</button>
+    </form>
+
+    <div class="result" id="result"></div>
+
+    <script>
+        if (window.Worker) {
+            const myWorker = new Worker("worker.js");
+
+            myWorker.onmessage = function(e) {
+                document.getElementById("result").innerText = `Result: ${JSON.stringify(e.data.frequencyAmplitudes)}`;
+            };
+
+            function computeAmplitudes() {
+                const timeseries = document.getElementById("timeseries").value.split(',').map(Number);
+                const testFrequencies = JSON.parse(document.getElementById("testFrequencies").value);
+                const sampleRate = Number(document.getElementById("sampleRate").value);
+                
+                myWorker.postMessage({ timeseries, testFrequencies, sampleRate });
+            }
+        } else {
+            document.getElementById("result").innerText = "Your browser doesn't support web workers.";
+        }
+    </script>
+</body>
+</html>

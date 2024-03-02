@@ -13,9 +13,8 @@ const computeCorrelations = (timeseries, testFrequencies, sampleRate) => {
       timeseries.forEach((value, t) => {
         accumulator[0] += value * Math.cos(scaleFactor * frequency * t);
         accumulator[1] += value * Math.sin(scaleFactor * frequency * t);
-      });
+    });
   
       return accumulator;
     });
-  };
-  
+};
