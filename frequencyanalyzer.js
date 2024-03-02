@@ -72,6 +72,10 @@ function interpretCorrelationResult({ data }) {
 
     if (confidence > confidenceThreshold) {
         const dominantFrequency = testFrequencies[maximumIndex];
+        const notename = dominantFrequency.name;
+        const notefreq = dominantFrequency.frequency.toFixed(2);
+
+
         document.getElementById("note-name").textContent = dominantFrequency.name;
         document.getElementById("frequency").textContent = dominantFrequency.frequency.toFixed(2);
     }
