@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Microphone Frequency Analyzer</title>
+    <link rel="stylesheet" href="styles.css" />
     <script type="module">
-        // Constants for musical notes
+        // Constaints for musical notes
         const C2 = 65.41; // C2 note, in Hz
         const notes = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
         let testFrequencies = [];
@@ -103,12 +104,11 @@
 </head>
 <body>
     <div class="body-wrapper">
-        <p>It sounds like you're playing...</p>
-        <h1 id="note-name"></h1>
         <p>
             <span>frequency (Hz): </span>
             <span id="frequency"></span>
         </p>
+        <h1 id="note-name"></h1>
     </div>
 
 </body>
