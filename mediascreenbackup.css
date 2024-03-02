@@ -1,0 +1,91 @@
+@media screen and (max-width: 720px) {
+    .navbar-container {
+        display: flex;
+        flex-direction: column; /* Ensure vertical layout for mobile */
+        justify-content: center;
+        align-items: center;
+        padding: 0;
+        position: relative; /* Adjusted to relative for stacking context */
+    }
+
+    .navbar-container h2 {
+        color: white;
+        align-items: center;
+        justify-content: center;
+        margin-right: 33%;
+        margin-left: 33%;
+        position: absolute;
+        z-index: 1;
+    }
+
+    .navbar-menu {
+        display: flex; /* Changed to flex for better control */
+        flex-direction: column; /* Stack items vertically */
+        justify-content: start; /* Align items to the start of the container */
+        align-items: center; /* Center items horizontally */
+        width: 100%; /* Full width */
+        position: absolute;
+        top: 80px; /* Adjust based on your navbar's height */
+        left: 0; /* Align to the left edge */
+        opacity: 0; /* Start hidden */
+        visibility: hidden; /* Ensure it's not interactable when hidden */
+        transition: opacity 0.5s ease, visibility 0.5s;
+        z-index: 2; /* Ensure it's above the navbar but below any overlay if present */
+    }
+
+    #navbar-logo {
+        margin-left: 4%;
+    }
+
+    .navbar-menu.active {
+        opacity: 1;
+        visibility: visible; /* Make it visible and interactable */
+        transition: opacity 0.5s ease, visibility 0s;
+        background-color: #CB6843; /* Corrected color code to ensure consistency */
+
+    }
+    .navbar-toggle .bar {
+        width: 25px;
+        height: 3px;
+        margin: 5px auto;
+        transition: all 0.3s ease-in-out;
+        background: #fff;
+    }
+    
+    .navbar-item {
+        width: 100%;
+    }
+
+    .navbar-links1, .navbar-links2 {
+        display: block; /* Use block for better mobile interaction */
+        text-align: center;
+        padding: 1rem; /* Adjust padding to your preference */
+        width: 100%;
+    }
+
+    #mobile-menu {
+        display: block; /* Ensure it's visible and has layout */
+        position: absolute;
+        top: 20px; /* Adjust based on your layout */
+        right: 20px; /* Adjust based on your layout */
+        z-index: 3; /* Ensure it's clickable above all */
+    }
+    
+    .navbar-toggle .bar {
+        display: block;
+    }
+
+    #mobile-menu.is-active .bar:nth-child(2) {
+        opacity: 0;
+
+    }
+
+    #mobile-menu.is-active .bar:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+    }
+
+    #mobile-menu.is-active .bar:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+    }
+
+}
