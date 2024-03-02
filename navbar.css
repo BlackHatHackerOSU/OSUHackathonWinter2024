@@ -6,6 +6,8 @@
     align-items: center;
     font-size: 1.2rem;
     position: sticky;
+    border-bottom: solid;
+    border-color: #203354;
 }
 
 .navbar-container {
@@ -61,13 +63,13 @@
 }
 
 .navbar-links1:hover {
-    color: aqua;
-    transition: all 0.3s ease;
+    color: #203354;
+    transition: all 0.7s ease;
 }
 
 .navbar-links2:hover {
-    color: aqua;
-    transition: all 0.3s ease;
+    color: #203354;
+    transition: all 0.7s ease;
 }
 
 

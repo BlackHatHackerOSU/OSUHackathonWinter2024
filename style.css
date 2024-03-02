@@ -1,7 +1,28 @@
 html {
     height: 100%;
-  }
+}
+
+.note-flipper-container {
+    display: flex;
+    align-items: center;
+    height: 5vh;
+
+}
+
+.a4 {
+    position: absolute;
+    left: 30px;
+}
   
+.a4 span {
+    color: #cB6843;
+}
+  
+.auto {
+    position: absolute;
+    right: 30px;
+}
+
 body {
     background-color: #eedbbb;
     position: fixed;
@@ -177,21 +198,6 @@ body {
 }
   
 .swal-button {
-    background: #2c3e50;
+    background: red;
 }
   
-.a4 {
-    position: absolute;
-    top: 16px;
-    left: 16px;
-}
-  
-.a4 span {
-    color: #cB6843;
-}
-  
-.auto {
-    position: absolute;
-    top: 16px;
-    right: 16px;
-}
