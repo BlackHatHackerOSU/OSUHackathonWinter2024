@@ -26,3 +26,4 @@ const Meter = function (selector) {
   Meter.prototype.update = function (deg) {
     this.$pointer.style.transform = "rotate(" + deg + "deg)";
   };
+  
