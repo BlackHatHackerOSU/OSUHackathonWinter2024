@@ -129,11 +129,6 @@ body {
     border-top-width: 20px;
 }
   
-.frequency-bars {
-    position: fixed;
-    bottom: 0;
-}
-  
 @media (max-width: 768px) {
     .meter {
       width: 100%;
