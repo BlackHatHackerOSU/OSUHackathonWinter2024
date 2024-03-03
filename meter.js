@@ -2,13 +2,13 @@
  * @param {string} selector
  * @constructor
  */
-const Meter = function (selector) {
+class Meter {
+  constructor(selector) {
     this.$root = document.querySelector(selector);
     this.$pointer = this.$root.querySelector(".meter-pointer");
     this.init();
-  };
-  
-  Meter.prototype.init = function () {
+  }
+  init() {
     for (var i = 0; i <= 10; i += 1) {
       const $scale = document.createElement("div");
       $scale.className = "meter-scale";
@@ -18,12 +18,14 @@ const Meter = function (selector) {
       }
       this.$root.appendChild($scale);
     }
-  };
-  
+  }
   /**
-   * @param {number} deg
-   */
-  Meter.prototype.update = function (deg) {
+     * @param {number} deg
+     */
+  update(deg) {
     this.$pointer.style.transform = "rotate(" + deg + "deg)";
-  };
+  }
+}
   
+  
+  module.exports = Meter;

@@ -1,4 +1,5 @@
-const Notes = function (selector, tuner) {
+class Notes {
+  constructor(selector, tuner) {
     this.tuner = tuner;
     this.isAutoMode = true;
     this.$root = document.querySelector(selector);
@@ -7,12 +8,10 @@ const Notes = function (selector, tuner) {
     this.$notes = [];
     this.$notesMap = {};
     this.createNotes();
-    this.$notesList.addEventListener("touchstart", (event) =>
-      event.stopPropagation()
+    this.$notesList.addEventListener("touchstart", (event) => event.stopPropagation()
     );
-  };
-  
-  Notes.prototype.createNotes = function () {
+  }
+  createNotes() {
     this.$notesList.innerHTML = "";
     const minOctave = 1;
     const maxOctave = 8;
@@ -39,14 +38,14 @@ const Notes = function (selector, tuner) {
         this.$notesMap[$note.dataset.value] = $note;
       }
     }
-  
+
     const self = this;
     this.$notes.forEach(function ($note) {
       $note.addEventListener("click", function () {
         if (self.isAutoMode) {
           return;
         }
-  
+
         const $active = self.$notesList.querySelector(".active");
         if ($active === this) {
           self.tuner.stopOscillator();
@@ -57,35 +56,37 @@ const Notes = function (selector, tuner) {
         }
       });
     });
-  };
-  
-  Notes.prototype.active = function ($note) {
+  }
+  active($note) {
     this.clearActive();
     $note.classList.add("active");
     this.$notesList.scrollLeft =
       $note.offsetLeft - (this.$notesList.clientWidth - $note.clientWidth) / 2;
-  };
-  
-  Notes.prototype.clearActive = function () {
+  }
+  clearActive() {
     const $active = this.$notesList.querySelector(".active");
     if ($active) {
       $active.classList.remove("active");
     }
-  };
-  
-  Notes.prototype.update = function (note) {
+  }
+  update(note) {
     if (note.value in this.$notesMap) {
       this.active(this.$notesMap[note.value]);
       this.$frequency.childNodes[0].textContent = parseFloat(
         note.frequency
       ).toFixed(1);
     }
-  };
-  
-  Notes.prototype.toggleAutoMode = function () {
+  }
+  toggleAutoMode() {
     if (!this.isAutoMode) {
       this.tuner.stopOscillator();
     }
     this.clearActive();
     this.isAutoMode = !this.isAutoMode;
-  };
+  }
+}
+  
+  
+  
+module.exports = Notes;
+  
