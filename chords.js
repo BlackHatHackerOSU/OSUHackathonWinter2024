@@ -1,3 +1,14 @@
+async function getChordData(instrument, note, chord) {
+    try {
+        // Adjust the relative path as necessary for your project
+        const chordModule = await import(`./chordsrc/db/${instrument}/chords/${note}/${chord}.js`);
+        return chordModule.default;
+    } catch (error) {
+        console.error("Error loading chord data:", error);
+        return null; // Handle the error as appropriate for your application
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     const instrumentSelect = document.getElementById('instrument-select');
     const keySelect = document.getElementById('key-select');
@@ -31,18 +42,25 @@ document.addEventListener('DOMContentLoaded', () => {
         suffixSelect.appendChild(option);
     });
 
-    generateChordButton.addEventListener('click', () => {
+    // Event listener for the 'Generate Chord' button
+    generateChordButton.addEventListener('click', async () => {
         const selectedInstrument = instrumentSelect.value;
         const selectedKey = keySelect.value;
         const selectedSuffix = suffixSelect.value;
 
-        console.log(`Generating chord for ${selectedInstrument} in key ${selectedKey} with suffix ${selectedSuffix}`);
-        
-        generateSvgChordDiagram(selectedKey, selectedSuffix);
+        // Retrieve the chord data based on selected key and suffix
+        const chordData = await getChordData(selectedInstrument, selectedKey, selectedSuffix);
+        if (chordData) {
+            const numStrings = selectedInstrument === 'ukelele' ? 4 : 6;
+            generateSvgChordDiagram(chordData, numStrings);
+        } else {
+            console.log(`No chord data found for ${selectedKey} ${selectedSuffix}`);
+        }
     });
 });
 
-function generateSvgChordDiagram(chordData) {
+
+function generateSvgChordDiagram(chordData, numStrings) {
     const svgNamespace = "http://www.w3.org/2000/svg";
     const chordDiagram = document.getElementById('chord-diagram');
     chordDiagram.innerHTML = ''; // Clear previous diagrams
@@ -58,7 +76,6 @@ function generateSvgChordDiagram(chordData) {
     const startFretX = 10;
     const startFretY = 30;
     const numFrets = 5;
-    const numStrings = 6;
     const circleRadius = 5;
 
     // Draw strings
@@ -134,4 +151,3 @@ function drawText(svg, svgNamespace, x, y, textContent) {
     text.textContent = textContent;
     svg.appendChild(text);
 }
-
