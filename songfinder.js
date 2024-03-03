@@ -88,7 +88,7 @@ fetch(apiUrl, {
     method: 'POST',
     body: formData,
     headers: {
-        'Authorization': `Bearer ${'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'}`,
+        'Authorization': `Bearer ${'your-api-key'}`,
     },
 })
 .then(response => response.json())
