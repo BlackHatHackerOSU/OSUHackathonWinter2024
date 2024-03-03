@@ -4,6 +4,7 @@
   "description": "This is a project which detects the guitar chords and also the genre ",
   "main": "app.js",
   "scripts": {
+    "start":"node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
