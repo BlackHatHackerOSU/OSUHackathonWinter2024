@@ -16,7 +16,7 @@
         <div class="navbar-container">
           <ul class="navbar-menu">
             <li class="navbar-item">
-              <a href="/" class="navbar-links1"> Song Finder </a>
+              <a href="/songfinder.html" class="navbar-links1"> Song Finder </a>
             </li>
             <li class="navbar-item">
               <a href="/tuner.html" class="navbar-links2"> Tuner </a>
@@ -32,10 +32,23 @@
           <span class="bar"></span>
         </div>
       </nav>
-    <div class="record-container">
-        <button class="record-button" onclick="songfinder.prototype.startRecord()">Start Record</button>
-        <button class="stop-record-button" onclick="songfinder.prototype.handleStopButtonClick()">Stop Record</button> 
-    </div>
+      <div class="title-container">
+        <h1>Find songs based on lyrics</h1>
+      </div>
+      <div class="output-container">
+        <div class="output">
+          <textarea id="apiOutput" rows="10" cols="50" readonly></textarea>
+      </div>
+      </div>
+
+      <div class="record wrapper">
+        <div class="record-text">
+          <button class="record-button" onclick="songfinder.prototype.startRecord()">Start Record</button>
+          <button class="stop-button" onclick="songfinder.prototype.stopRecord()">Stop Record</button> 
+      </div>
+      </div>
+   
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     <script src="https://cdn.jsdelivr.net/npm/aubiojs@0.1.1/build/aubio.min.js"></script>
     <script src="tuner.js"></script>
