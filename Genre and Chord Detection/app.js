@@ -6,7 +6,7 @@ const fs = require('fs');
 const app = express();
 const port = 3000;
 
-// Bootstrap CSS link for inclusion in your EJS view
+
 const bootstrapCSS = "https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css";
 
 app.set('views', path.join(__dirname, 'views'));
@@ -24,14 +24,6 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-// const chordTranslations = {
-//     'LaAumentada': 'A#',
-//     'ReBemolMayor': 'D# Major',
-//     'SiMenor': 'B Minor',
-//     'SiBemolMenor': 'Bb Minor',
-//     'ReMayor': 'D Major',
-//     // Add more translations as needed
-// };
 
 const chordTranslations = {
     'LaAumentada': 'A#',
