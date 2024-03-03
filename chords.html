@@ -7,8 +7,9 @@
       content="width=device-width,initial-scale=1,user-scalable=no"
     />
     <title>Guitar Tab Tracker</title>
-    <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="navbar.css" /> 
+    <!--<link rel="stylesheet" href="style.css" />-->
+    <link rel="stylesheet" href="navbar.css" />
+    <link rel="stylesheet" href="chords.css" />
   </head>
   <body>
     <nav class="navbar">
@@ -31,6 +32,46 @@
           <span class="bar"></span>
         </div>
       </nav>
+
+
+    <div id="chord-generator">
+        <h1>Chord Generator</h1>
+        <div>
+            <label for="instrument-select">Instrument:</label>
+            <select id="instrument-select">
+                <!-- Instrument options will be populated by JavaScript -->
+            </select>
+        </div>
+        <div>
+            <label for="key-select">Key:</label>
+            <select id="key-select">
+                <!-- Key options will be populated by JavaScript -->
+            </select>
+        </div>
+        <div>
+            <label for="suffix-select">Chord Type:</label>
+            <select id="suffix-select">
+                <!-- Chord type options will be populated by JavaScript -->
+            </select>
+        </div>
+        <button id="generate-chord">Generate Chord</button>
+        <div id="chord-diagram">
+            <!-- Chord diagram will be displayed here -->
+        </div>
+    </div>
+    <script src="chords.js"></script>
+
+    <div id="chord-library"></div>
+
+    <!-- Chord Lib Scripts-->
+    <script src="chordsrc/db/guitar/index.js"></script>
+    <script src="chordsrc/db/guitar/keys.js"></script>
+    <script src="chordsrc/db/guitar/main.js"></script>
+    <script src="chordsrc/db/guitar/suffixes.js"></script>
+    <script src="chordsrc/db/guitar/tunings.js"></script>
+    <script src="chordsrc/db/guitar/notes/_Ab.js"></script>
+    <!-- Include other note scripts here -->
+    <script src="script.js"></script>
 
     
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
