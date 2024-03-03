@@ -1,11 +1,11 @@
 @media screen and (max-width: 720px) {
     .navbar-container {
         display: flex;
-        flex-direction: column; /* Ensure vertical layout for mobile */
+        flex-direction: column; 
         justify-content: center;
         align-items: center;
         padding: 0;
-        position: relative; /* Adjusted to relative for stacking context */
+        position: relative; 
     }
 
     .navbar-container h2 {
@@ -19,18 +19,18 @@
     }
 
     .navbar-menu {
-        display: flex; /* Changed to flex for better control */
-        flex-direction: column; /* Stack items vertically */
-        justify-content: start; /* Align items to the start of the container */
-        align-items: center; /* Center items horizontally */
-        width: 100%; /* Full width */
+        display: flex; 
+        flex-direction: column; 
+        justify-content: start; 
+        align-items: center; 
+        width: 100%;
         position: absolute;
-        top: 80px; /* Adjust based on your navbar's height */
-        left: 0; /* Align to the left edge */
-        opacity: 0; /* Start hidden */
-        visibility: hidden; /* Ensure it's not interactable when hidden */
+        top: 80px; 
+        left: 0; 
+        opacity: 0;
+        visibility: hidden;
         transition: opacity 0.5s ease, visibility 0.5s;
-        z-index: 2; /* Ensure it's above the navbar but below any overlay if present */
+        z-index: 2;
     }
 
     #navbar-logo {
@@ -39,9 +39,9 @@
 
     .navbar-menu.active {
         opacity: 1;
-        visibility: visible; /* Make it visible and interactable */
+        visibility: visible; 
         transition: opacity 0.5s ease, visibility 0s;
-        background-color: #CB6843; /* Corrected color code to ensure consistency */
+        background-color: #CB6843; 
 
     }
     .navbar-toggle .bar {
@@ -57,18 +57,18 @@
     }
 
     .navbar-links1, .navbar-links2 {
-        display: block; /* Use block for better mobile interaction */
+        display: block; 
         text-align: center;
-        padding: 1rem; /* Adjust padding to your preference */
+        padding: 1rem; 
         width: 100%;
     }
 
     #mobile-menu {
-        display: block; /* Ensure it's visible and has layout */
+        display: block; 
         position: absolute;
-        top: 20px; /* Adjust based on your layout */
-        right: 20px; /* Adjust based on your layout */
-        z-index: 3; /* Ensure it's clickable above all */
+        top: 20px; 
+        right: 20px; 
+        z-index: 3; 
     }
     
     .navbar-toggle .bar {

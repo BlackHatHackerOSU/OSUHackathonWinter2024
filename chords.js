@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const chordDiagram = document.getElementById('chord-diagram');
 
     // Populate the instrument dropdown
-    ['guitar', 'ukulele'].forEach(instrument => {
+    ['guitar'/*, 'ukelele'*/].forEach(instrument => { //temporarily removing ukelele option
         let option = document.createElement('option');
         option.value = instrument;
         option.textContent = instrument.charAt(0).toUpperCase() + instrument.slice(1);
@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Retrieve the chord data based on selected key and suffix
         const chordData = await getChordData(selectedInstrument, selectedKey, selectedSuffix);
         if (chordData) {
-            const numStrings = selectedInstrument === 'Ukelele' ? 4 : 6;
+            const numStrings = selectedInstrument === 'ukelele' ? 4 : 6;
             generateSvgChordDiagram(chordData, numStrings);
         } else {
             console.log(`No chord data found for ${selectedKey} ${selectedSuffix}`);
@@ -124,7 +124,7 @@ function generateSvgChordDiagram(chordData, numStrings) {
 
     // Handle barre chords if any
     if (position.barres) {
-        const barre = position.barres; // Assuming single barre for simplicity
+        const barre = position.barres; // Assuming single barre 
         const barreFret = parseInt(barre, 10) - 1; // Adjust barre fret position
         const barreWidth = stringSpacing * (numStrings - 1);
         const barreHeight = 6; // Height of the barre chord representation
