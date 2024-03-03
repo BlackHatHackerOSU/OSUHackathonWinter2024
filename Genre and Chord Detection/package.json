@@ -1,0 +1,19 @@
+{
+  "name": "music_chord_detector",
+  "version": "1.0.0",
+  "description": "This is a project which detects the guitar chords and also the genre ",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.6.7",
+    "ejs": "^3.1.9",
+    "express": "^4.18.3",
+    "fluent-ffmpeg": "^2.1.2",
+    "multer": "^1.4.5-lts.1",
+    "node-fetch": "^3.3.2"
+  }
+}
