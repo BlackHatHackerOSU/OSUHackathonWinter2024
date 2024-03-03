@@ -75,7 +75,6 @@ songfinder.prototype.sendDataToAPI = function(recordedBlob) {
 const self = this;
 const apiUrl = "https://api.openai.com/v1/audio/transcriptions" ;
 
-// Reference to the textarea where the API output will be displayed
 const apiOutputTextarea = document.getElementById('apiOutput');
 
 const formData = new FormData();
@@ -102,7 +101,6 @@ fetch(apiUrl, {
 .catch(error => {
     console.error('Error sending data to API:', error);
 
-    // Display the error message in the textarea
     apiOutputTextarea.value = `Error: ${error.message}`;
 });
 };
