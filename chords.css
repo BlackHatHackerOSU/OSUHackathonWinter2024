@@ -3,7 +3,7 @@ html {
 }
 
 body {
-    background-color: green;
+    background-color: #eedbbb;
     position: fixed;
     font-family: sans-serif;
     color: #2c3e50;
@@ -14,24 +14,35 @@ body {
     user-select: none;
 }
 
-.chord-container {
-    background-color: aqua;
+.header-container {
     width: 100%;
-    display: flex;
-    align-items: center;
+    background-color: #eedbbb;
+    text-align: center;
+    padding: 15px 0;
+}
+
+.chord-container {
+    display: inline-flex;
     justify-content: center;
+    background-color: #eedbbb;
+    width: 100%;
+    background-color: #eedbbb;
 
 }
 
 #chord-generator {
-    background-color: red;
-    margin-top: 50px;
+    width: 80%;
+    background-color: #cB6843;
     margin-bottom: 50px;
+    margin-left: auto;
+    margin-right: auto;
     padding: 40px;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     text-align: center;
-    max-width: 5000px;
+    max-width: 800px;
+    border-style: solid;
+    border-color: #2c3e50; 
 }
 
 #chord-generator h1 {
@@ -60,16 +71,16 @@ select, button {
 }
 
 button {
-    background-color: #cB6843;
-    color: white;
+    background-color: #eedbbb;
+    color: #2c3e50;
     font-weight: bold;
     cursor: pointer;
     border-color: #cB6840;
 }
 
 button:hover {
-    background-color: #cB6830;
-    border-color: #0056b3;
+    background-color: #eedbbf;
+    border-color: #2c3e50;
 }
 
 #chord-diagram {
@@ -83,3 +94,4 @@ button:hover {
     color: #666;
     font-size: 20px;
 }
+
