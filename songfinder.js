@@ -88,7 +88,7 @@ fetch(apiUrl, {
     method: 'POST',
     body: formData,
     headers: {
-        'Authorization': `Bearer ${'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'}`,
+        'Authorization': `Bearer ${'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'}`,
     },
 })
 .then(response => response.json())
@@ -135,7 +135,7 @@ fetch(apiUrl, {
   body: JSON.stringify(requestData),
   headers: {
     'Content-Type': 'application/json',
-    'Authorization': `Bearer ${'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'}`, 
+    'Authorization': `Bearer ${'your-api-key'}`, 
   },
 })
   .then(response => response.json())
