@@ -1,86 +1,151 @@
 const songfinder = function() {
-    this.initGetUserMedia;
- };
- 
- songfinder.prototype.initGetUserMedia = function () {
-   window.AudioContext = window.AudioContext || window.webkitAudioContext;
-   if (!window.AudioContext) {
-     return alert("AudioContext not supported");
-   }
- 
-   // Older browsers might not implement mediaDevices at all, so we set an empty object first
-   if (navigator.mediaDevices === undefined) {
-     navigator.mediaDevices = {};
-   }
- 
-   // Some browsers partially implement mediaDevices. We can't just assign an object
-   // with getUserMedia as it would overwrite existing properties.
-   // Here, we will just add the getUserMedia property if it's missing.
-   if (navigator.mediaDevices.getUserMedia === undefined) {
-     navigator.mediaDevices.getUserMedia = function (constraints) {
-       // First get ahold of the legacy getUserMedia, if present
-       const getUserMedia =
-         navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
- 
-       // Some browsers just don't implement it - return a rejected promise with an error
-       // to keep a consistent interface
-       if (!getUserMedia) {
-         alert("getUserMedia is not implemented in this browser");
-       }
- 
-       return new Promise(function (resolve, reject) {
-         getUserMedia.call(navigator, constraints, resolve, reject);
-       });
-     };
-   }
- };
- 
- songfinder.prototype.startRecord = function () {
-   const self = this;
- 
-   navigator.mediaDevices
-     .getUserMedia({ audio: true })
-     .then(function (stream) {
-       self.recordedData = [];
- 
-       const mediaRecorder = new MediaRecorder(stream);
- 
-       mediaRecorder.ondataavailable = function (event) {
-         if (event.data.size > 0) {
-           self.recordedData.push(event.data);
-         }
-       };
- 
-       mediaRecorder.onstop = function () {
-         const recordedBlob = new Blob(self.recordedData, { type: 'audio/wav' });
-         self.sendDataToAPI(recordedBlob); // Call function to send data
-       };
- 
-       self.mediaRecorder = mediaRecorder; // Store the recorder instance for later access
-       self.mediaRecorder.start(); // Start recording
-     })
-     // Closing parenthesis added here, as it was missing previously
-     .catch(function (error) {
-       console.error("Error accessing media devices:", error);
-       // Handle errors gracefully, e.g., inform the user
-     });
- };
- 
- 
- songfinder.prototype.handleStopButtonClick = function () {
-   if (this.mediaRecorder) {
-     this.mediaRecorder.stop();
-   }
- };
- 
- // Replace with your actual function to parse song titles from the API response
- function parseSongTitlesFromResponse(responseData) {
-   // Implement logic to extract song titles from the response data format
-   // This function needs to be replaced with your specific parsing logic
-   // based on the actual response format from the Gemini API
-   return [];
+  this.initGetUserMedia();
+};
+
+songfinder.prototype.initGetUserMedia = function () {
+ window.AudioContext = window.AudioContext || window.webkitAudioContext;
+ if (!window.AudioContext) {
+   return alert("AudioContext not supported");
  }
- 
- songfinder.prototype.init = function () {
-   this.startRecord();
- };
+
+ if (navigator.mediaDevices === undefined) {
+   navigator.mediaDevices = {};
+ }
+
+ if (navigator.mediaDevices.getUserMedia === undefined) {
+   navigator.mediaDevices.getUserMedia = function (constraints) {
+     const getUserMedia =
+       navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+
+    
+     if (!getUserMedia) {
+       alert("getUserMedia is not implemented in this browser");
+     }
+
+     return new Promise(function (resolve, reject) {
+       getUserMedia.call(navigator, constraints, resolve, reject);
+     });
+   };
+ }
+};
+
+songfinder.prototype.startRecord = function () {
+const self = this;
+navigator.mediaDevices.getUserMedia({ audio: true })
+    .then(function (stream) {
+        self.recordedData = [];
+        const mediaRecorder = new MediaRecorder(stream);
+
+        mediaRecorder.ondataavailable = function (event) {
+            if (event.data.size > 0) {
+                self.recordedData.push(event.data);
+            }
+        };
+
+        mediaRecorder.onstop = function () {
+            const recordedBlob = new Blob(self.recordedData, { type: 'audio/wav' });
+            self.sendDataToAPI(recordedBlob);
+            self.recordedData = [];
+        };
+
+        self.mediaRecorder = mediaRecorder;
+        self.mediaRecorder.start();
+        console.log("recording");
+    })
+    .catch(function (error) {
+        console.error("Error accessing media devices:", error);
+    });
+};
+
+songfinder.prototype.stopRecord = function () {
+const self = this;
+
+if (self.mediaRecorder && self.mediaRecorder.state === 'recording') {
+    self.mediaRecorder.stop();
+
+    const tracks = self.mediaRecorder.stream.getTracks();
+    tracks.forEach(track => track.stop());
+} else {
+    console.error('MediaRecorder is not in the recording state.');
+}
+};
+
+
+songfinder.prototype.sendDataToAPI = function(recordedBlob) {
+const self = this;
+const apiUrl = "https://api.openai.com/v1/audio/transcriptions" ;
+
+// Reference to the textarea where the API output will be displayed
+const apiOutputTextarea = document.getElementById('apiOutput');
+
+const formData = new FormData();
+formData.append('file', recordedBlob, 'audio.wav');
+formData.append('model', 'whisper-1'); 
+formData.append('language', 'en'); 
+formData.append('response_format', 'json');
+
+fetch(apiUrl, {
+    method: 'POST',
+    body: formData,
+    headers: {
+        'Authorization': `Bearer ${'your-api-key'}`,
+    },
+})
+.then(response => response.json())
+.then(data => {
+  const transcribedText = data.text;
+  self.sendTextToAPI(transcribedText);
+  //apiOutputTextarea.value = transcribedText;
+
+  
+})    
+.catch(error => {
+    console.error('Error sending data to API:', error);
+
+    // Display the error message in the textarea
+    apiOutputTextarea.value = `Error: ${error.message}`;
+});
+};
+
+songfinder.prototype.sendTextToAPI = function(transcribedText) {
+const self = this;
+
+const apiUrl = "https://api.openai.com/v1/chat/completions";
+const apiOutputTextarea = document.getElementById('apiOutput');
+const requestData = {
+  messages: [
+    {
+      role: 'user',
+          content: `Using these lyrics: "${transcribedText}". Find 5 similar songs with similar artists. Respond in this format: 
+          1. Song Name by Artist
+          2. Song Name by Artist
+          3. Song Name by Artist
+          4. Song Name by Artist
+          5. Song Name by Artist`,          
+    },
+  ],
+  model: 'gpt-3.5-turbo',
+  n: 1,
+  max_tokens: 50,
+  stop: null,
+};
+
+fetch(apiUrl, {
+  method: 'POST',
+  body: JSON.stringify(requestData),
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${'your-api-key'}`, 
+  },
+})
+  .then(response => response.json())
+  .then(data => {
+    const generatedResponse = data.choices[0].message.content;
+    
+    apiOutputTextarea.value = generatedResponse;
+  })
+  .catch(error => {
+    console.error('Error sending text to API:', error);
+    apiOutputTextarea.value = `Error: ${error.message}`;
+  });
+};

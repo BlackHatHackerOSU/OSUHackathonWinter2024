@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1,user-scalable=no"
+    />
+    <title>Guitar Hub</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="navbar.css" /> 
+    <link rel="stylesheet" href="songfinder.css" /> 
+  </head>
+  <body>
+    <nav class="navbar">
+        <div class="navbar-container">
+          <ul class="navbar-menu">
+            <li class="navbar-item">
+              <a href="/songfinder.html" class="navbar-links1"> Song Finder </a>
+            </li>
+            <li class="navbar-item">
+              <a href="/tuner.html" class="navbar-links2"> Tuner </a>
+            </li>
+            <li class="navbar-item">
+              <a href="/chords.html" class="navbar-links2"> Chords </a>
+            </li>
+            <li class="navbar-item">
+              <a href="http://localhost:3000/" class="navbar-links2"> Song Genres </a>
+            </li>
+          </ul>
+        </div>
+        <div class="navbar-toggle" id="mobile-menu">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </div>
+      </nav>
+      <div class="title-container">
+        <h1>Find similar songs based on lyrics</h1>
+      </div>
+      <div class="output-container">
+        <div class="output">
+          <textarea id="apiOutput" rows="10" cols="50" readonly></textarea>
+      </div>
+      </div>
+
+      <div class="record wrapper">
+        <div class="record-text">
+          <button class="record-button" onclick="songfinder.prototype.startRecord()">Start Record</button>
+          <button class="stop-button" onclick="songfinder.prototype.stopRecord()">Stop Record</button> 
+      </div>
+      </div>
+   
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aubiojs@0.1.1/build/aubio.min.js"></script>
+    <script src="tuner.js"></script>
+    <script src="meter.js"></script>
+    <script src="frequency-bars.js"></script>
+    <script src="notes.js"></script>
+    <script src="app.js"></script>
+    <script src="navbar.js"></script>
+    <script src="songfinder.js"></script>
+  </body>
+</html>
