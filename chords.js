@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Retrieve the chord data based on selected key and suffix
         const chordData = await getChordData(selectedInstrument, selectedKey, selectedSuffix);
         if (chordData) {
-            const numStrings = selectedInstrument === 'ukelele' ? 4 : 6;
+            const numStrings = selectedInstrument === 'Ukelele' ? 4 : 6;
             generateSvgChordDiagram(chordData, numStrings);
         } else {
             console.log(`No chord data found for ${selectedKey} ${selectedSuffix}`);
